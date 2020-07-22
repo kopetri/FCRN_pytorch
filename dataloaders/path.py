@@ -13,6 +13,8 @@ class Path(object):
             return '/home/data/model/wangxin/nyudepthv2'
         elif database == 'kitti':
             return '/home/data/UnsupervisedDepth/wangixn/kitti'
+        elif database == 'floorplan3d':
+            return '/mnt/hdd/shared_datasets/floorplan3d'
         else:
             print('Database {} not available.'.format(database))
             raise NotImplementedError
