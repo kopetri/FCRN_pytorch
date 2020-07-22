@@ -10,10 +10,10 @@ import shutil
 import socket
 import time
 import torch
-from tensorboardX import SummaryWriter
+from torch.utils.tensorboard import SummaryWriter
 from torch.optim import lr_scheduler
 
-from dataloaders import kitti_dataloader, nyu_dataloader
+from dataloaders import kitti_dataloader, nyu_dataloader, floorplan3d_dataloader
 from dataloaders.path import Path
 from metrics import AverageMeter, Result
 import utils
@@ -35,14 +35,20 @@ best_result.set_to_worst()
 
 
 def create_loader(args):
-    traindir = os.path.join(Path.db_root_dir(args.dataset), 'train')
+    if args.dataset == "floorplan3d":
+        traindir = Path.db_root_dir(args.dataset)
+    else:
+        traindir = os.path.join(Path.db_root_dir(args.dataset), 'train')
     if os.path.exists(traindir):
         print('Train dataset "{}" is existed!'.format(traindir))
     else:
         print('Train dataset "{}" is not existed!'.format(traindir))
         exit(-1)
 
-    valdir = os.path.join(Path.db_root_dir(args.dataset), 'val')
+    if args.dataset == "floorplan3d":
+        valdir = Path.db_root_dir(args.dataset)
+    else:
+        valdir = os.path.join(Path.db_root_dir(args.dataset), 'val')
     if os.path.exists(traindir):
         print('Train dataset "{}" is existed!'.format(valdir))
     else:
@@ -60,6 +66,9 @@ def create_loader(args):
     elif args.dataset == 'nyu':
         train_set = nyu_dataloader.NYUDataset(traindir, type='train')
         val_set = nyu_dataloader.NYUDataset(valdir, type='val')
+    elif args.dataset == 'floorplan3d':
+        train_set = floorplan3d_dataloader.Floorplan3DDataset(traindir, dataset_type=args.dataset_type, split='train')
+        val_set = floorplan3d_dataloader.Floorplan3DDataset(valdir, dataset_type=args.dataset_type, split='val')
     else:
         print('no dataset named as ', args.dataset)
         exit(-1)

@@ -37,6 +37,7 @@ def parse_command():
     parser.add_argument('-j', '--workers', default=0, type=int, metavar='N',
                         help='number of data loading workers (default: 10)')
     parser.add_argument('--dataset', type=str, default="nyu")
+    parser.add_argument('--dataset_type', type=str, default="dataset0")
     parser.add_argument('--manual_seed', default=1, type=int, help='Manually set random seed')
     parser.add_argument('--print-freq', '-p', default=10, type=int,
                         metavar='N', help='print frequency (default: 10)')
