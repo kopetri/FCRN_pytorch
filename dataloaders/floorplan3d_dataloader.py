@@ -15,6 +15,7 @@ def DepthLoader(file):
     assert os.path.exists(file), "file not found: {}".format(file)
     depth_png = np.array(Image.open(file), dtype=np.uint16)
     depth = depth_png.astype(np.float32) / ((2**16) - 1)
+    depth *= 10.0 # rescale to range[0..10]
     return depth
 
 to_tensor = transforms.ToTensor()
