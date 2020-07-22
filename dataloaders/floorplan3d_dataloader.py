@@ -23,7 +23,7 @@ to_tensor = transforms.ToTensor()
 class Floorplan3DDataset(data.Dataset):
     color_jitter = transforms.ColorJitter(0.4, 0.4, 0.4)
     def __init__(self, root, dataset_type, split):
-        self.output_size = (228, 304)
+        self.output_size = (228, 405)
         self.root = root
         file_list = "{}/{}_{}.list".format(root, dataset_type, split)
         with open(file_list, "r") as f:
